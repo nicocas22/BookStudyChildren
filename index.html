@@ -781,21 +781,32 @@ filters.addEventListener('click', (e)=>{
 
 /* ---------- Router simple por # ---------- */
 const readProgress = document.getElementById('readProgress');
+let lastScreenId = null;
 function showScreen(){
   const hash = location.hash.replace('#','');       // ej: "incas/s-mapa"
   const [screen, anchor] = hash.split('/');
   const isGuide = screen && document.getElementById('screen-'+screen);
+  const screenId = isGuide ? screen : 'home';
+  const screenChanged = screenId !== lastScreenId;
 
   document.querySelectorAll('[id^="screen-"]').forEach(s=>s.hidden = true);
-  const target = document.getElementById('screen-' + (isGuide ? screen : 'home'));
+  const target = document.getElementById('screen-' + screenId);
   target.hidden = false;
   readProgress.hidden = !isGuide;
   document.getElementById('reader').hidden = !isGuide;
-  if(typeof stopReading === 'function') stopReading();
+
+  // Solo detener la narración al cambiar de guía/pantalla, NO al saltar entre secciones
+  if(screenChanged && typeof stopReading === 'function') stopReading();
+  lastScreenId = screenId;
 
   if(isGuide && anchor){
     const el = document.getElementById(anchor);
-    if(el){ setTimeout(()=>el.scrollIntoView({behavior:'smooth'}), 30); return; }
+    if(el){
+      setTimeout(()=>el.scrollIntoView({behavior:'smooth'}), 30);
+      // Si está narrando, saltar a la sección elegida
+      if(typeof jumpReaderTo === 'function') jumpReaderTo(anchor);
+      return;
+    }
   }
   window.scrollTo(0,0);
   updateProgress();
@@ -1001,12 +1012,29 @@ function playIdx(){
 rdAudio.addEventListener('ended', ()=>{ if(rdState==='playing'){ rdIdx++; playIdx(); } });
 rdAudio.addEventListener('error', ()=>{ if(rdState==='playing'){ rdIdx++; playIdx(); } });
 
+function currentVisibleIndex(){
+  const secs = activeSections();
+  let idx = 0;
+  for(let i=0;i<secs.length;i++){
+    if(secs[i].getBoundingClientRect().top <= 160) idx = i; else break;
+  }
+  return idx;
+}
 function startReading(){
   rdGuide = activeGuideId();
-  rdQueue = activeSections(); rdIdx = 0;
+  rdQueue = activeSections();
+  rdIdx = currentVisibleIndex();   // empieza por la sección que se está viendo
   if(!rdQueue.length) return;
   rdState='playing'; setReaderUI(); playIdx();
 }
+// Saltar la narración a una sección concreta (al tocar el índice de arriba)
+window.jumpReaderTo = function(sectionId){
+  if(rdState!=='playing' && rdState!=='paused') return;   // solo si ya está escuchando
+  if(!rdQueue.length){ rdGuide = activeGuideId(); rdQueue = activeSections(); }
+  const i = rdQueue.indexOf(document.getElementById(sectionId));
+  if(i < 0) return;   // sección sin audio (ej. el mapa): no saltamos
+  rdIdx = i; rdState='playing'; setReaderUI(); playIdx();
+};
 rdPlay.addEventListener('click', ()=>{
   if(rdState==='idle') startReading();
   else if(rdState==='playing'){ rdAudio.pause(); rdState='paused'; setReaderUI(); }

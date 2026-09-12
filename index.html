@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#155555">
 <title>Guías de Estudio</title>
 <meta name="description" content="Guías de estudio ilustradas para repasar antes de las pruebas.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -307,10 +313,42 @@
     border-radius:var(--radius);flex-wrap:wrap;text-align:center;
   }
 
-  @media (max-width:480px){
-    .home-hero h1{font-size:2rem;}
-    .guide-hero h1{font-size:1.8rem;}
-    .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  /* ---- Tablet y móvil ---- */
+  @media (max-width:680px){
+    .wrap{padding:0 16px 56px;}
+    .home-hero{padding:36px 18px 32px;}
+    .home-hero h1{font-size:clamp(1.7rem,7.5vw,2.3rem);}
+    .home-hero p{font-size:.98rem;}
+    .home-hero .badge{font-size:.72rem;}
+    .guide-hero{padding:26px 18px 30px;}
+    .guide-hero h1{font-size:clamp(1.5rem,6.8vw,2.1rem);}
+    .guide-hero p{font-size:.94rem;}
+    .filters{gap:6px;margin:22px 0 4px;}
+    .chip{padding:6px 12px;font-size:.85rem;}
+    section.topic{margin-top:16px;padding:14px 15px;}
+    section.topic h2{font-size:1.16rem;}
+    section.topic ul{padding-left:20px;}
+    .section-head{font-size:1.3rem;margin:38px 0 12px;}
+    .map-box{padding:14px;}
+    .backbar{padding:8px 10px;gap:8px;}
+    .back-btn{padding:8px 12px;}
+    .theme-toggle{width:38px;height:38px;top:10px;right:10px;}
+    .q-block{padding:14px 14px;}
+  }
+
+  /* ---- Teléfono: una tarjeta por fila, más grande y fácil de tocar ---- */
+  @media (max-width:520px){
+    .grid{grid-template-columns:1fr;gap:14px;}
+    .card-top{height:96px;font-size:2.8rem;}
+    .vocab-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;}
+    .flip-card{height:100px;}
+    .flip-front{font-size:.92rem;}
+    .flip-back{font-size:.8rem;}
+  }
+
+  @media (max-width:360px){
+    .home-hero h1{font-size:1.55rem;}
+    .vocab-grid{grid-template-columns:1fr 1fr;}
   }
   @media (prefers-reduced-motion:reduce){
     *{scroll-behavior:auto;}
@@ -318,6 +356,8 @@
     .guide-card{transition:none;}
   }
 </style>
+</head>
+<body>
 
 <div class="read-progress" id="readProgress" hidden></div>
 <button class="theme-toggle" id="themeToggle" aria-label="Cambiar entre modo claro y oscuro" title="Cambiar tema">🌙</button>
@@ -816,3 +856,5 @@ quizContainer.addEventListener('click', (e)=>{
 refreshStudied();
 showScreen();
 </script>
+</body>
+</html>

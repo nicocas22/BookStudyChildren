@@ -998,42 +998,61 @@ window.stopReading = function(){
   try{ rdAudio.removeAttribute('src'); rdAudio.load(); }catch(e){}
   clearHighlight(); rdIdx=0; setReaderUI();
 };
-function playIdx(){
+let suppressUntil = 0;   // evita que el auto-desplazamiento se confunda con scroll del usuario
+function playIdx(doScroll){
   if(rdIdx >= rdQueue.length){ stopReading(); return; }
   clearHighlight();
   const sec = rdQueue[rdIdx];
   sec.classList.add('reading');
-  sec.scrollIntoView({behavior:'smooth', block:'center'});
+  if(doScroll !== false){
+    suppressUntil = Date.now() + 1000;
+    sec.scrollIntoView({behavior:'smooth', block:'start'});
+  }
   rdAudio.src = 'audio/' + rdGuide + '/' + sec.id + '.mp3';
   rdAudio.playbackRate = rdRate;
   const p = rdAudio.play();
   if(p && p.catch) p.catch(()=>{ rdState='paused'; setReaderUI(); });
 }
-rdAudio.addEventListener('ended', ()=>{ if(rdState==='playing'){ rdIdx++; playIdx(); } });
-rdAudio.addEventListener('error', ()=>{ if(rdState==='playing'){ rdIdx++; playIdx(); } });
+rdAudio.addEventListener('ended', ()=>{ if(rdState==='playing'){ rdIdx++; playIdx(true); } });
+rdAudio.addEventListener('error', ()=>{ if(rdState==='playing'){ rdIdx++; playIdx(true); } });
 
-function currentVisibleIndex(){
-  const secs = activeSections();
-  let idx = 0;
+// Índice de la sección que cruza la "línea de lectura" (arriba de la pantalla)
+function sectionIndexAtTop(){
+  const secs = rdQueue.length ? rdQueue : activeSections();
+  const line = 140;
+  let fallback = 0;
   for(let i=0;i<secs.length;i++){
-    if(secs[i].getBoundingClientRect().top <= 160) idx = i; else break;
+    const r = secs[i].getBoundingClientRect();
+    if(r.top <= line){ fallback = i; if(r.bottom > line) return i; }
+    else break;
   }
-  return idx;
+  return fallback;
 }
 function startReading(){
   rdGuide = activeGuideId();
   rdQueue = activeSections();
-  rdIdx = currentVisibleIndex();   // empieza por la sección que se está viendo
+  rdIdx = sectionIndexAtTop();   // empieza por la sección que se está viendo
   if(!rdQueue.length) return;
-  rdState='playing'; setReaderUI(); playIdx();
+  rdState='playing'; setReaderUI(); playIdx(true);
 }
+// Mientras escucha, si el niño hace scroll a otra sección, la narración la sigue
+let rdScrollTimer = null;
+window.addEventListener('scroll', ()=>{
+  if(rdState!=='playing') return;
+  clearTimeout(rdScrollTimer);
+  rdScrollTimer = setTimeout(()=>{
+    if(rdState!=='playing' || Date.now() < suppressUntil) return;
+    const idx = sectionIndexAtTop();
+    if(idx !== rdIdx){ rdIdx = idx; playIdx(false); }   // ya está a la vista: no re-desplazar
+  }, 250);
+}, {passive:true});
 // Saltar la narración a una sección concreta (al tocar el índice de arriba)
 window.jumpReaderTo = function(sectionId){
   if(rdState!=='playing' && rdState!=='paused') return;   // solo si ya está escuchando
   if(!rdQueue.length){ rdGuide = activeGuideId(); rdQueue = activeSections(); }
   const i = rdQueue.indexOf(document.getElementById(sectionId));
   if(i < 0) return;   // sección sin audio (ej. el mapa): no saltamos
-  rdIdx = i; rdState='playing'; setReaderUI(); playIdx();
+  rdIdx = i; rdState='playing'; setReaderUI(); playIdx(true);
 };
 rdPlay.addEventListener('click', ()=>{
   if(rdState==='idle') startReading();

@@ -410,6 +410,7 @@
 <div class="reader" id="reader" hidden>
   <button id="rdPlay">🔊 Escuchar</button>
   <button id="rdStop" class="ghost" hidden aria-label="Detener lectura">⏹</button>
+  <button id="rdSpeed" class="ghost" hidden aria-label="Velocidad de lectura">1×</button>
   <span id="rdStatus"></span>
 </div>
 
@@ -959,78 +960,65 @@ quizContainer.addEventListener('click', (e)=>{
   }
 });
 
-/* ---------- Lector en voz alta (Web Speech API, gratis y del navegador) ---------- */
+/* ---------- Lector en voz alta (audio narrado con voz humana) ---------- */
 const reader = document.getElementById('reader');
 const rdPlay = document.getElementById('rdPlay');
 const rdStop = document.getElementById('rdStop');
+const rdSpeed = document.getElementById('rdSpeed');
 const rdStatus = document.getElementById('rdStatus');
-const synth = window.speechSynthesis;
-let rdVoice = null, rdQueue = [], rdIdx = 0, rdState = 'idle';
+const rdAudio = new Audio();
+rdAudio.preload = 'auto';
+let rdQueue = [], rdIdx = 0, rdState = 'idle', rdGuide = '', rdRate = 1;
+const SPEEDS = [1, 1.25, 1.5, 0.75];
 
-if(!synth){
-  // Navegador sin soporte: dejamos el botón informando
-  rdPlay.addEventListener('click', ()=>{ rdStatus.textContent = 'Tu navegador no permite leer en voz alta.'; });
-} else {
-  function pickVoice(){
-    const voices = synth.getVoices().filter(v=>/^es/i.test(v.lang));
-    rdVoice = voices.find(v=>/es[-_](419|MX|US|CL|CO|AR|PE)/i.test(v.lang)) || voices[0] || null;
-  }
-  pickVoice();
-  synth.addEventListener('voiceschanged', pickVoice);
+function activeScreen(){ return document.querySelector('[id^="screen-"]:not([hidden])'); }
+function activeGuideId(){ const s = activeScreen(); return s ? s.id.replace('screen-','') : ''; }
+function activeSections(){ const s = activeScreen(); return s ? [...s.querySelectorAll('section.topic')] : []; }
+function clearHighlight(){ document.querySelectorAll('.reading').forEach(s=>s.classList.remove('reading')); }
 
-  function sectionText(sec){
-    const parts = [];
-    sec.querySelectorAll('h2,p,li,figcaption').forEach(el=>{
-      const c = el.cloneNode(true);
-      c.querySelectorAll('.icon,.credit').forEach(x=>x.remove());
-      const t = c.textContent.replace(/\s+/g,' ').trim();
-      if(t) parts.push(t);
-    });
-    return parts.join('. ');
-  }
-  function activeSections(){
-    const scr = document.querySelector('[id^="screen-"]:not([hidden])');
-    return scr ? [...scr.querySelectorAll('section.topic, .map-box')] : [];
-  }
-  function clearHighlight(){
-    document.querySelectorAll('.reading').forEach(s=>s.classList.remove('reading'));
-  }
-  function setReaderUI(){
-    if(rdState==='playing'){ rdPlay.innerHTML='⏸ Pausar'; rdStop.hidden=false; rdStatus.textContent='Leyendo…'; }
-    else if(rdState==='paused'){ rdPlay.innerHTML='▶ Seguir'; rdStop.hidden=false; rdStatus.textContent='En pausa'; }
-    else { rdPlay.innerHTML='🔊 Escuchar'; rdStop.hidden=true; rdStatus.textContent=''; }
-  }
-  window.stopReading = function(){
-    rdState='idle'; try{ synth.cancel(); }catch(e){} clearHighlight(); rdIdx=0; setReaderUI();
-  };
-  function speakIdx(){
-    if(rdIdx >= rdQueue.length){ stopReading(); return; }
-    clearHighlight();
-    const sec = rdQueue[rdIdx];
-    sec.classList.add('reading');
-    sec.scrollIntoView({behavior:'smooth', block:'center'});
-    const u = new SpeechSynthesisUtterance(sectionText(sec));
-    if(rdVoice){ u.voice = rdVoice; u.lang = rdVoice.lang; } else { u.lang = 'es-ES'; }
-    u.rate = 0.97; u.pitch = 1;
-    u.onend = ()=>{ if(rdState==='playing'){ rdIdx++; speakIdx(); } };
-    u.onerror = ()=>{ if(rdState==='playing'){ rdIdx++; speakIdx(); } };
-    synth.speak(u);
-  }
-  function startReading(){
-    rdQueue = activeSections(); rdIdx = 0;
-    if(!rdQueue.length) return;
-    try{ synth.cancel(); }catch(e){}
-    rdState='playing'; setReaderUI(); speakIdx();
-  }
-  rdPlay.addEventListener('click', ()=>{
-    if(rdState==='idle') startReading();
-    else if(rdState==='playing'){ synth.pause(); rdState='paused'; setReaderUI(); }
-    else { synth.resume(); rdState='playing'; setReaderUI(); }
-  });
-  rdStop.addEventListener('click', ()=> stopReading());
-  // Por si acaso: detener la voz al cerrar/recargar la página
-  window.addEventListener('beforeunload', ()=>{ try{ synth.cancel(); }catch(e){} });
+function setReaderUI(){
+  if(rdState==='playing'){ rdPlay.innerHTML='⏸ Pausar'; rdStop.hidden=false; rdSpeed.hidden=false; rdStatus.textContent='Leyendo…'; }
+  else if(rdState==='paused'){ rdPlay.innerHTML='▶ Seguir'; rdStop.hidden=false; rdSpeed.hidden=false; rdStatus.textContent='En pausa'; }
+  else { rdPlay.innerHTML='🔊 Escuchar'; rdStop.hidden=true; rdSpeed.hidden=true; rdStatus.textContent=''; }
 }
+window.stopReading = function(){
+  rdState='idle';
+  rdAudio.pause();
+  try{ rdAudio.removeAttribute('src'); rdAudio.load(); }catch(e){}
+  clearHighlight(); rdIdx=0; setReaderUI();
+};
+function playIdx(){
+  if(rdIdx >= rdQueue.length){ stopReading(); return; }
+  clearHighlight();
+  const sec = rdQueue[rdIdx];
+  sec.classList.add('reading');
+  sec.scrollIntoView({behavior:'smooth', block:'center'});
+  rdAudio.src = 'audio/' + rdGuide + '/' + sec.id + '.mp3';
+  rdAudio.playbackRate = rdRate;
+  const p = rdAudio.play();
+  if(p && p.catch) p.catch(()=>{ rdState='paused'; setReaderUI(); });
+}
+rdAudio.addEventListener('ended', ()=>{ if(rdState==='playing'){ rdIdx++; playIdx(); } });
+rdAudio.addEventListener('error', ()=>{ if(rdState==='playing'){ rdIdx++; playIdx(); } });
+
+function startReading(){
+  rdGuide = activeGuideId();
+  rdQueue = activeSections(); rdIdx = 0;
+  if(!rdQueue.length) return;
+  rdState='playing'; setReaderUI(); playIdx();
+}
+rdPlay.addEventListener('click', ()=>{
+  if(rdState==='idle') startReading();
+  else if(rdState==='playing'){ rdAudio.pause(); rdState='paused'; setReaderUI(); }
+  else { rdAudio.play(); rdState='playing'; setReaderUI(); }
+});
+rdStop.addEventListener('click', ()=> stopReading());
+rdSpeed.addEventListener('click', ()=>{
+  rdRate = SPEEDS[(SPEEDS.indexOf(rdRate)+1) % SPEEDS.length];
+  rdAudio.playbackRate = rdRate;
+  rdSpeed.textContent = rdRate + '×';
+});
+window.addEventListener('beforeunload', ()=>{ try{ rdAudio.pause(); }catch(e){} });
 
 /* ---------- Inicio ---------- */
 refreshStudied();

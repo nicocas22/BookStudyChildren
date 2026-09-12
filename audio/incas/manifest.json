@@ -1,0 +1,72 @@
+[
+  {
+    "id": "s-ubicacion",
+    "chars": 262,
+    "bytes": 99792
+  },
+  {
+    "id": "s-chile",
+    "chars": 679,
+    "bytes": 264384
+  },
+  {
+    "id": "s-organizacion",
+    "chars": 895,
+    "bytes": 361728
+  },
+  {
+    "id": "s-religion",
+    "chars": 423,
+    "bytes": 197568
+  },
+  {
+    "id": "s-lugares",
+    "chars": 566,
+    "bytes": 244800
+  },
+  {
+    "id": "s-vida",
+    "chars": 662,
+    "bytes": 277200
+  },
+  {
+    "id": "s-caminos",
+    "chars": 125,
+    "bytes": 57168
+  },
+  {
+    "id": "s-chasqui",
+    "chars": 917,
+    "bytes": 350064
+  },
+  {
+    "id": "s-quipus",
+    "chars": 256,
+    "bytes": 107280
+  },
+  {
+    "id": "s-alimentacion",
+    "chars": 543,
+    "bytes": 229968
+  },
+  {
+    "id": "s-cultivos",
+    "chars": 171,
+    "bytes": 110592
+  },
+  {
+    "id": "s-tierra",
+    "chars": 260,
+    "bytes": 107424
+  },
+  {
+    "id": "s-construcciones",
+    "chars": 305,
+    "bytes": 127872
+  },
+  {
+    "id": "s-fin",
+    "chars": 169,
+    "bytes": 79776
+  }
+]

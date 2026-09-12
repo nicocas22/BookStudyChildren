@@ -1,0 +1,818 @@
+<title>Guías de Estudio</title>
+<meta name="description" content="Guías de estudio ilustradas para repasar antes de las pruebas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Base cálido tipo papel */
+    --bg:        #FBF6EC;
+    --bg-2:      #F3E9D2;
+    --card:      #FFFDF7;
+    --ink:       #33261B;
+    --ink-soft:  #715c46;
+    --line:      #E0CFA8;
+    --line-soft: #Eee3c9;
+
+    /* Colores por materia (sistema de orden) */
+    --historia:  #B5532F;
+    --historia-2:#C89B3C;
+    --mate:      #2E6DB4;
+    --lengua:    #7A4B8C;
+    --ciencias:  #3F8F5B;
+
+    /* Acento principal de la portada */
+    --accent:    #1F6F6F;
+    --accent-ink:#0f4444;
+
+    --shadow: 0 1px 2px rgba(51,38,27,.05), 0 6px 20px rgba(51,38,27,.07);
+    --radius: 14px;
+  }
+  :root:not([data-theme="light"]){
+    @media (prefers-color-scheme: dark){}
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:        #201a14;
+      --bg-2:      #2a2219;
+      --card:      #2b241b;
+      --ink:       #f2e7d3;
+      --ink-soft:  #c3b299;
+      --line:      #4a3d2b;
+      --line-soft: #3a3021;
+      --historia:  #e08a5f;
+      --historia-2:#e0b85f;
+      --mate:      #6fa6e0;
+      --lengua:    #c093d6;
+      --ciencias:  #71c091;
+      --accent:    #4fb3b3;
+      --accent-ink:#8fd6d6;
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 8px 24px rgba(0,0,0,.28);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:        #201a14;
+    --bg-2:      #2a2219;
+    --card:      #2b241b;
+    --ink:       #f2e7d3;
+    --ink-soft:  #c3b299;
+    --line:      #4a3d2b;
+    --line-soft: #3a3021;
+    --historia:  #e08a5f;
+    --historia-2:#e0b85f;
+    --mate:      #6fa6e0;
+    --lengua:    #c093d6;
+    --ciencias:  #71c091;
+    --accent:    #4fb3b3;
+    --accent-ink:#8fd6d6;
+    --shadow: 0 1px 2px rgba(0,0,0,.2), 0 8px 24px rgba(0,0,0,.28);
+  }
+
+  *{box-sizing:border-box;}
+  [hidden]{display:none !important;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;text-wrap:balance;}
+  a{color:inherit;}
+  img{max-width:100%;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px 72px;}
+
+  /* Barra decorativa superior */
+  .stripe-band{
+    height:7px;width:100%;
+    background:linear-gradient(90deg,
+      var(--historia) 0 25%, var(--historia-2) 25% 50%,
+      var(--accent) 50% 75%, var(--lengua) 75% 100%);
+  }
+
+  /* Barra de progreso de lectura (solo en guías) */
+  .read-progress{
+    position:fixed;top:0;left:0;height:4px;width:0%;
+    background:linear-gradient(90deg,var(--historia),var(--historia-2));
+    z-index:60;transition:width .1s linear;
+  }
+
+  /* Botón cambiar tema */
+  .theme-toggle{
+    position:fixed;top:14px;right:14px;z-index:70;
+    background:var(--card);border:1px solid var(--line);
+    color:var(--ink);border-radius:999px;
+    width:40px;height:40px;font-size:1.15rem;cursor:pointer;
+    box-shadow:var(--shadow);line-height:1;
+  }
+  .theme-toggle:hover{border-color:var(--accent);}
+
+  /* ---------- PORTADA ---------- */
+  .home-hero{
+    background:
+      radial-gradient(ellipse at 50% -30%, var(--accent) 0%, var(--accent-ink) 70%);
+    color:#F3E6C4;
+    padding:48px 20px 42px;
+    text-align:center;
+  }
+  .home-hero .badge{
+    display:inline-block;font-size:.78rem;letter-spacing:.14em;
+    text-transform:uppercase;font-weight:600;
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+    padding:5px 14px;border-radius:999px;color:#fdf3d8;
+  }
+  .home-hero h1{font-size:2.5rem;font-weight:700;margin:14px 0 8px;color:#fff;}
+  .home-hero p{max-width:460px;margin:0 auto;color:#e6dcc0;font-size:1.05rem;}
+
+  .zigzag{
+    height:14px;width:100%;
+    background:
+      linear-gradient(135deg,var(--historia-2) 25%,transparent 25%) 0 0,
+      linear-gradient(-135deg,var(--historia-2) 25%,transparent 25%) 0 0;
+    background-size:16px 16px;background-color:var(--bg);
+  }
+
+  .filters{
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+    margin:28px 0 6px;
+  }
+  .chip{
+    border:1px solid var(--line);background:var(--card);color:var(--ink);
+    padding:7px 15px;border-radius:999px;font-size:.9rem;font-weight:500;
+    cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px;
+  }
+  .chip .dot{width:9px;height:9px;border-radius:50%;background:var(--ink-soft);}
+  .chip[data-mat="historia"] .dot{background:var(--historia);}
+  .chip[data-mat="mate"] .dot{background:var(--mate);}
+  .chip[data-mat="lengua"] .dot{background:var(--lengua);}
+  .chip[data-mat="ciencias"] .dot{background:var(--ciencias);}
+  .chip.active{background:var(--ink);color:var(--bg);border-color:var(--ink);}
+  .chip.active .dot{background:var(--bg);}
+  .chip:hover:not(.active){border-color:var(--accent);}
+
+  .grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:18px;margin-top:22px;
+  }
+  .guide-card{
+    display:flex;flex-direction:column;text-decoration:none;color:var(--ink);
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;box-shadow:var(--shadow);
+    transition:transform .16s ease, box-shadow .16s ease;
+  }
+  .guide-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(51,38,27,.13);}
+  .guide-card:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+  .card-top{
+    height:88px;display:flex;align-items:center;justify-content:center;
+    font-size:2.6rem;position:relative;
+  }
+  .card-top.historia{background:linear-gradient(135deg,var(--historia),var(--historia-2));}
+  .card-top.mate{background:linear-gradient(135deg,#2E6DB4,#5a97d8);}
+  .card-top.lengua{background:linear-gradient(135deg,#7A4B8C,#a878bd);}
+  .card-top.ciencias{background:linear-gradient(135deg,#3F8F5B,#6bbd88);}
+  .card-body{padding:15px 17px 18px;display:flex;flex-direction:column;gap:5px;flex:1;}
+  .card-tag{
+    font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;
+  }
+  .card-tag.historia{color:var(--historia);}
+  .card-tag.mate{color:var(--mate);}
+  .card-tag.lengua{color:var(--lengua);}
+  .card-tag.ciencias{color:var(--ciencias);}
+  .guide-card h3{font-size:1.2rem;margin:0;line-height:1.25;}
+  .guide-card .desc{font-size:.9rem;color:var(--ink-soft);margin:0;}
+  .card-meta{
+    margin-top:auto;padding-top:10px;font-size:.82rem;color:var(--ink-soft);
+    display:flex;align-items:center;gap:6px;
+  }
+  .done-badge{
+    display:none;font-size:.75rem;font-weight:600;color:var(--ciencias);
+    align-items:center;gap:4px;
+  }
+  .guide-card.done .done-badge{display:inline-flex;}
+
+  .guide-card.soon{cursor:default;opacity:.72;}
+  .guide-card.soon:hover{transform:none;box-shadow:var(--shadow);}
+  .card-top.soon{background:repeating-linear-gradient(45deg,var(--bg-2) 0 12px,var(--line-soft) 12px 24px);font-size:2rem;}
+  .soon-pill{
+    align-self:flex-start;font-size:.72rem;font-weight:600;color:var(--ink-soft);
+    background:var(--bg-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;
+  }
+
+  .home-foot{
+    margin-top:34px;padding:16px 18px;border:1px dashed var(--line);
+    border-radius:var(--radius);color:var(--ink-soft);font-size:.9rem;text-align:center;
+  }
+
+  /* ---------- GUÍA ---------- */
+  .guide-hero{
+    color:#F3E6C4;padding:34px 20px 40px;text-align:center;
+  }
+  .guide-hero.historia{background:radial-gradient(ellipse at 50% -20%, #2c8a8a 0%, #155555 55%, #0f4444 100%);}
+  .guide-hero svg{display:block;margin:0 auto 8px;}
+  .guide-hero h1{font-size:2.2rem;font-weight:700;margin:4px 0 8px;color:#fff;}
+  .guide-hero p{max-width:480px;margin:0 auto;color:#e3d9bd;font-size:1rem;}
+
+  .backbar{
+    position:sticky;top:0;z-index:40;background:var(--bg);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:10px;padding:9px 14px;flex-wrap:wrap;
+  }
+  .back-btn{
+    background:var(--card);border:1px solid var(--line);color:var(--ink);
+    font-family:inherit;font-size:.86rem;font-weight:500;cursor:pointer;
+    padding:7px 13px;border-radius:999px;display:inline-flex;align-items:center;gap:6px;
+    white-space:nowrap;
+  }
+  .back-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .nav-index{display:flex;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;flex:1;padding-bottom:2px;}
+  .nav-index a{
+    flex:0 0 auto;text-decoration:none;font-size:.8rem;color:var(--ink);
+    background:var(--card);border:1px solid var(--line);padding:5px 12px;
+    border-radius:999px;white-space:nowrap;
+  }
+  .nav-index a:hover{border-color:var(--accent);color:var(--accent);}
+
+  section.topic{
+    margin-top:20px;padding:16px 18px;border-left:4px solid var(--line);
+    border-radius:6px;scroll-margin-top:64px;
+  }
+  section.topic.red{border-left-color:var(--historia);background:color-mix(in srgb,var(--historia) 8%,transparent);}
+  section.topic.teal{border-left-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent);}
+  section.topic.gold{border-left-color:var(--historia-2);background:color-mix(in srgb,var(--historia-2) 10%,transparent);}
+  section.topic h2{font-size:1.28rem;margin:0 0 8px;display:flex;align-items:center;gap:9px;}
+  section.topic h2 .icon{font-size:1.15rem;}
+  section.topic p{margin:0 0 8px;}
+  section.topic ul{margin:8px 0;padding-left:22px;}
+  section.topic li{margin-bottom:5px;}
+
+  .map-box{
+    margin-top:22px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);padding:18px;text-align:center;scroll-margin-top:64px;
+    box-shadow:var(--shadow);
+  }
+  .map-box h2{font-size:1.28rem;margin:0 0 10px;text-align:left;display:flex;align-items:center;gap:9px;}
+  .map-caption{font-size:.82rem;color:var(--ink-soft);margin-top:10px;}
+  .map-legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:10px;font-size:.82rem;}
+  .map-legend span{display:inline-flex;align-items:center;gap:5px;}
+  .swatch{width:12px;height:12px;border-radius:3px;display:inline-block;}
+
+  .section-head{font-size:1.5rem;margin:48px 0 14px;display:flex;align-items:center;gap:10px;}
+
+  .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  .flip-card{perspective:900px;height:108px;cursor:pointer;}
+  .flip-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:10px;}
+  .flip-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
+  .flip-card.flipped .flip-inner{transform:rotateY(180deg);}
+  .flip-front,.flip-back{
+    position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;
+    box-shadow:var(--shadow);
+  }
+  .flip-front{background:var(--card);border:1px solid var(--line);font-weight:600;color:var(--historia);font-size:.98rem;}
+  .flip-back{background:var(--accent);color:#fbf3e1;transform:rotateY(180deg);font-size:.85rem;line-height:1.4;}
+
+  .quiz-sub{color:var(--ink-soft);font-size:.92rem;margin:-6px 0 18px;}
+  .q-block{margin-bottom:22px;background:var(--card);border:1px solid var(--line-soft);border-radius:var(--radius);padding:15px 16px;}
+  .q-text{font-weight:600;margin-bottom:10px;}
+  .q-options{display:flex;flex-direction:column;gap:7px;}
+  .q-opt{
+    text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:9px;
+    padding:10px 13px;font-size:.96rem;cursor:pointer;color:var(--ink);font-family:inherit;
+    transition:border-color .12s ease;
+  }
+  .q-opt:hover{border-color:var(--accent);}
+  .q-opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+  .q-opt.correct{background:color-mix(in srgb,var(--ciencias) 22%,var(--card));border-color:var(--ciencias);font-weight:600;}
+  .q-opt.wrong{background:color-mix(in srgb,var(--historia) 20%,var(--card));border-color:var(--historia);}
+  .q-feedback{font-size:.88rem;margin-top:9px;color:var(--ink-soft);min-height:18px;}
+
+  .score-box{
+    margin-top:16px;padding:18px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);text-align:center;box-shadow:var(--shadow);
+  }
+  .score-box .score-num{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;display:block;}
+  .score-box .score-msg{color:var(--ink-soft);}
+  .retry-btn,.done-btn{
+    margin-top:12px;background:var(--accent);color:#fff;border:none;border-radius:999px;
+    padding:10px 20px;font-size:.95rem;font-weight:600;cursor:pointer;font-family:inherit;
+  }
+  .retry-btn{background:transparent;color:var(--accent);border:1px solid var(--accent);margin-left:8px;}
+  .done-btn:hover{filter:brightness(1.06);}
+
+  .study-toggle{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    margin-top:26px;padding:16px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);flex-wrap:wrap;text-align:center;
+  }
+
+  @media (max-width:480px){
+    .home-hero h1{font-size:2rem;}
+    .guide-hero h1{font-size:1.8rem;}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto;}
+    .flip-inner{transition:none;}
+    .guide-card{transition:none;}
+  }
+</style>
+
+<div class="read-progress" id="readProgress" hidden></div>
+<button class="theme-toggle" id="themeToggle" aria-label="Cambiar entre modo claro y oscuro" title="Cambiar tema">🌙</button>
+
+<!-- ============================ PORTADA ============================ -->
+<div id="screen-home">
+  <div class="stripe-band"></div>
+  <div class="home-hero">
+    <span class="badge">Cuaderno de repaso</span>
+    <h1>Guías de Estudio</h1>
+    <p>Todo lo que necesitas repasar para tus pruebas, en un solo lugar 🙂</p>
+  </div>
+  <div class="zigzag"></div>
+
+  <div class="wrap">
+    <div class="filters" id="filters">
+      <button class="chip active" data-mat="all">Todas</button>
+      <button class="chip" data-mat="historia"><span class="dot"></span>Historia</button>
+      <button class="chip" data-mat="mate"><span class="dot"></span>Matemáticas</button>
+      <button class="chip" data-mat="lengua"><span class="dot"></span>Lenguaje</button>
+      <button class="chip" data-mat="ciencias"><span class="dot"></span>Ciencias</button>
+    </div>
+
+    <div class="grid" id="guideGrid">
+      <a class="guide-card" href="#incas" data-mat="historia" data-guide="incas">
+        <div class="card-top historia">☀️</div>
+        <div class="card-body">
+          <span class="card-tag historia">Historia · 4° básico</span>
+          <h3>El Imperio Inca</h3>
+          <p class="desc">El Tahuantinsuyo: su gente, su religión, sus caminos y el fin del imperio.</p>
+          <div class="card-meta">
+            <span>📖 15 temas · 🃏 vocabulario · ✏️ quiz</span>
+          </div>
+          <span class="done-badge">✓ Estudiada</span>
+        </div>
+      </a>
+
+      <!-- Tarjetas de ejemplo para futuras guías (se activan cuando agreguemos el contenido) -->
+      <div class="guide-card soon" data-mat="mate">
+        <div class="card-top soon">➗</div>
+        <div class="card-body">
+          <span class="card-tag mate">Matemáticas</span>
+          <h3>Próxima guía</h3>
+          <p class="desc">Aquí irá la siguiente guía de matemáticas.</p>
+          <span class="soon-pill">Próximamente</span>
+        </div>
+      </div>
+
+      <div class="guide-card soon" data-mat="lengua">
+        <div class="card-top soon">📚</div>
+        <div class="card-body">
+          <span class="card-tag lengua">Lenguaje</span>
+          <h3>Próxima guía</h3>
+          <p class="desc">Aquí irá la siguiente guía de lenguaje.</p>
+          <span class="soon-pill">Próximamente</span>
+        </div>
+      </div>
+
+      <div class="guide-card soon" data-mat="ciencias">
+        <div class="card-top soon">🔬</div>
+        <div class="card-body">
+          <span class="card-tag ciencias">Ciencias</span>
+          <h3>Próxima guía</h3>
+          <p class="desc">Aquí irá la siguiente guía de ciencias.</p>
+          <span class="soon-pill">Próximamente</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="home-foot">Iremos agregando más guías a medida que las preparemos. ¡Mucho ánimo con el estudio! 💪</p>
+  </div>
+</div>
+
+<!-- ============================ GUÍA: INCAS ============================ -->
+<div id="screen-incas" hidden>
+  <div class="stripe-band"></div>
+  <div class="guide-hero historia">
+    <svg width="90" height="60" viewBox="0 0 90 60" aria-hidden="true">
+      <polygon points="45,5 60,40 30,40" fill="#C89B3C"/>
+      <polygon points="20,20 30,45 8,45" fill="#e3d9bd" opacity="0.7"/>
+      <polygon points="70,20 82,45 58,45" fill="#e3d9bd" opacity="0.7"/>
+      <circle cx="45" cy="14" r="6" fill="#f3e6c4"/>
+    </svg>
+    <h1>El Imperio Inca</h1>
+    <p>Guía completa de repaso para tu prueba de Historia — 4° básico</p>
+  </div>
+
+  <nav class="backbar">
+    <button class="back-btn" data-back>← Inicio</button>
+    <div class="nav-index">
+      <a href="#incas/s-ubicacion">Ubicación</a>
+      <a href="#incas/s-mapa">Mapa</a>
+      <a href="#incas/s-chile">Chile</a>
+      <a href="#incas/s-organizacion">Organización</a>
+      <a href="#incas/s-religion">Religión</a>
+      <a href="#incas/s-lugares">Lugares sagrados</a>
+      <a href="#incas/s-vida">Vida y fiestas</a>
+      <a href="#incas/s-caminos">Caminos</a>
+      <a href="#incas/s-chasqui">Chasqui</a>
+      <a href="#incas/s-quipus">Quipus</a>
+      <a href="#incas/s-alimentacion">Alimentación</a>
+      <a href="#incas/s-cultivos">Cultivos</a>
+      <a href="#incas/s-tierra">Trabajo de la tierra</a>
+      <a href="#incas/s-construcciones">Construcciones</a>
+      <a href="#incas/s-fin">Fin del imperio</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <section class="topic teal" id="s-ubicacion">
+      <h2><span class="icon">🗺️</span>¿Dónde vivían?</h2>
+      <p>Los incas formaron un imperio enorme llamado <strong>Tahuantinsuyo</strong>, que se extendía a lo largo de la cordillera de los Andes, desde el sur de Colombia hasta el centro de Chile y el norte de Argentina.</p>
+      <p>Su capital era la ciudad de <strong>Cusco</strong>, en el actual Perú.</p>
+    </section>
+
+    <div class="map-box" id="s-mapa">
+      <h2><span class="icon">🧭</span>Mapa del imperio</h2>
+      <svg width="230" height="380" viewBox="0 0 230 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa esquemático del imperio inca a lo largo de los Andes">
+        <text x="115" y="18" text-anchor="middle" font-size="12" fill="var(--ink)">N</text>
+        <polygon points="115,20 111,30 119,30" fill="var(--ink)"/>
+        <path d="M140,35 C125,80 118,120 108,165 C100,205 92,250 88,295 C86,325 88,350 92,365"
+              fill="none" stroke="#1F6F6F" stroke-width="26" stroke-linecap="round" opacity="0.85"/>
+        <circle cx="140" cy="35" r="4" fill="var(--ink)"/>
+        <text x="148" y="39" font-size="10" fill="var(--ink)">Quito (norte)</text>
+        <polygon points="112,150 118,163 132,163 121,171 125,185 112,177 99,185 103,171 92,163 106,163" fill="#C89B3C"/>
+        <text x="136" y="168" font-size="10" fill="var(--ink)">Cusco (capital)</text>
+        <circle cx="102" cy="210" r="4" fill="var(--ink)"/>
+        <text x="110" y="214" font-size="10" fill="var(--ink)">Lago Titicaca</text>
+        <circle cx="90" cy="278" r="6" fill="none" stroke="#9E3B43" stroke-width="2.5"/>
+        <text x="100" y="270" font-size="10" fill="#c0504f">Llegada a Chile</text>
+        <text x="100" y="282" font-size="10" fill="#c0504f">(Norte Grande)</text>
+        <circle cx="90" cy="362" r="4" fill="var(--ink)"/>
+        <text x="100" y="366" font-size="10" fill="var(--ink)">Límite sur: río Maule</text>
+        <circle cx="72" cy="378" r="3" fill="var(--ink-soft)"/>
+        <text x="80" y="382" font-size="9" fill="var(--ink-soft)">Santiago (fuera del imperio)</text>
+      </svg>
+      <div class="map-legend">
+        <span><span class="swatch" style="background:#1F6F6F"></span> Territorio inca</span>
+        <span><span class="swatch" style="background:#C89B3C"></span> Capital</span>
+        <span><span class="swatch" style="background:#9E3B43"></span> Contacto con Chile</span>
+      </div>
+      <p class="map-caption">Mapa esquemático, no a escala. Muestra la forma alargada del imperio a lo largo de los Andes.</p>
+    </div>
+
+    <section class="topic gold" id="s-chile">
+      <h2><span class="icon">🇨🇱</span>Relación con Chile</h2>
+      <ul>
+        <li>El Tahuantinsuyo llegó hasta el centro de Chile, aproximadamente hasta el <strong>río Maule</strong> (algunos historiadores dicen que hasta el Biobío).</li>
+        <li>Construyeron caminos (parte del Camino del Inca) y fortalezas llamadas <strong>pucarás</strong> en el norte de Chile, como el Pucará de Turi o el Pucará de Chena, cerca de Santiago.</li>
+        <li>Llevaron el sistema de <strong>andenes</strong> (terrazas de cultivo) a valles del norte chileno.</li>
+        <li>Se relacionaron con pueblos originarios locales, como los <strong>diaguitas</strong> y <strong>atacameños</strong>, influyendo en su cerámica, tejidos y agricultura.</li>
+        <li>En el cerro <strong>El Plomo</strong>, cerca de Santiago, se encontró una ofrenda inca en la cima de la montaña: una prueba de sus ceremonias religiosas de altura.</li>
+      </ul>
+    </section>
+
+    <section class="topic red" id="s-organizacion">
+      <h2><span class="icon">👑</span>¿Cómo se organizaban?</h2>
+      <p>La sociedad inca estaba ordenada en niveles, como una pirámide, desde el Inca hasta el pueblo:</p>
+      <ul>
+        <li><strong>El Inca</strong>: máxima autoridad; se creía que era hijo del dios Sol.</li>
+        <li><strong>Alta nobleza</strong>: la familia del Inca y sus descendientes (las <em>panacas</em>). Ocupaban los cargos más importantes del gobierno y del ejército.</li>
+        <li><strong>Baja nobleza</strong>: los <em>curacas</em> (jefes locales) y sacerdotes, además de funcionarios que administraban las distintas regiones del imperio. No eran de la familia real, pero tenían privilegios por su cargo.</li>
+        <li><strong>El pueblo</strong> (<em>hatun runa</em>): la mayoría de la población. Se organizaban en <strong>ayllus</strong>, comunidades de familias que trabajaban la tierra y debían pagar tributo en trabajo (la mita).</li>
+        <li><strong>Yanaconas</strong>: personas que no pertenecían a un ayllu y servían de forma permanente al Inca, a la nobleza o a los templos. Estaban fuera de la organización tradicional y dependían directamente de a quién servían.</li>
+      </ul>
+    </section>
+
+    <section class="topic teal" id="s-religion">
+      <h2><span class="icon">☀️</span>Religión</h2>
+      <p>Los incas eran <strong>politeístas</strong>: creían en varios dioses relacionados con la naturaleza.</p>
+      <ul>
+        <li><strong>Inti</strong>: dios Sol, el más importante. Se creía que el Inca era su hijo.</li>
+        <li><strong>Pachamama</strong>: madre tierra, protectora de los cultivos.</li>
+        <li><strong>Mama Quilla</strong>: diosa Luna.</li>
+        <li><strong>Illapa</strong>: dios del rayo y el trueno.</li>
+      </ul>
+      <p>Los sacerdotes organizaban ceremonias para agradecer a los dioses, especialmente por las buenas cosechas, con ofrendas de comida, chicha y objetos.</p>
+    </section>
+
+    <section class="topic gold" id="s-lugares">
+      <h2><span class="icon">🏛️</span>Lugares para sus celebraciones y religión</h2>
+      <ul>
+        <li><strong>Coricancha</strong> (Templo del Sol), en Cusco: el templo más importante, cubierto de láminas de oro.</li>
+        <li><strong>Machu Picchu</strong>: además de ciudad, tenía espacios ceremoniales y de observación astronómica.</li>
+        <li><strong>Sacsayhuamán</strong>: gran complejo cerca de Cusco usado en ceremonias.</li>
+        <li><strong>Isla del Sol</strong>, en el Lago Titicaca: lugar sagrado, según sus mitos ahí nació el Sol.</li>
+        <li><strong>Ushnus</strong>: plataformas ceremoniales en distintas partes del imperio, incluso en cerros altos del norte de Chile.</li>
+      </ul>
+    </section>
+
+    <section class="topic red" id="s-vida">
+      <h2><span class="icon">🎉</span>Su vida y celebraciones</h2>
+      <p>La vida diaria giraba en torno al <strong>ayllu</strong>: se trabajaba la tierra, se tejía y se criaban animales en familia.</p>
+      <p>Vestían ropa tejida con lana de <strong>llama</strong> y <strong>alpaca</strong>; los colores y diseños de los tejidos podían indicar de dónde venía una persona.</p>
+      <ul>
+        <li><strong>Inti Raymi</strong> (Fiesta del Sol): la celebración más importante, en junio, para agradecer al Sol por las cosechas. Todavía se celebra hoy en Cusco.</li>
+        <li><strong>Capac Raymi</strong>: fiesta de diciembre, ligada a ritos de iniciación de los jóvenes.</li>
+        <li>Usaban música con instrumentos como la <strong>quena</strong> (flauta) y tambores, junto con danzas.</li>
+      </ul>
+    </section>
+
+    <section class="topic teal" id="s-caminos">
+      <h2><span class="icon">🛣️</span>Caminos y mensajeros</h2>
+      <p>Construyeron una enorme red de caminos, el <strong>Camino del Inca</strong> (Qhapaq Ñan), que conectaba todo el imperio.</p>
+    </section>
+
+    <section class="topic gold" id="s-chasqui">
+      <h2><span class="icon">🏃</span>El chasqui: el encargado de llevar la información</h2>
+      <p>El <strong>chasqui</strong> era el mensajero del imperio inca. Su función era llevar noticias, órdenes del Inca y otra información importante de un extremo a otro del Tahuantinsuyo, corriendo por el Camino del Inca.</p>
+      <ul>
+        <li>Los chasquis trabajaban en <strong>relevos</strong>: cada uno corría solo un tramo del camino y luego entregaba el mensaje al siguiente chasqui, que esperaba listo en una pequeña construcción llamada <strong>tambo</strong> o <strong>chasquiwasi</strong>.</li>
+        <li>Gracias a este sistema de postas, un mensaje podía recorrer largas distancias en pocos días, algo muy rápido para la época.</li>
+        <li>Los mensajes podían ser hablados (de memoria) o registrados en <strong>quipus</strong>, que el chasqui llevaba consigo.</li>
+        <li>También podían transportar objetos pequeños, como alimentos para el Inca.</li>
+        <li>Eran elegidos por ser buenos corredores, entrenados desde jóvenes para resistir la altura y el esfuerzo físico.</li>
+      </ul>
+    </section>
+
+    <section class="topic red" id="s-quipus">
+      <h2><span class="icon">🪢</span>¿Cómo se comunicaban sin escritura?</h2>
+      <p>No tenían un alfabeto como el nuestro. Usaban los <strong>quipus</strong>: cuerdas de colores con nudos que servían para registrar cantidades e información importante.</p>
+    </section>
+
+    <section class="topic teal" id="s-alimentacion">
+      <h2><span class="icon">🌽</span>Alimentación y comidas</h2>
+      <ul>
+        <li>La <strong>papa</strong> era su alimento principal; cultivaban cientos de variedades y la conservaban deshidratada (<strong>chuño</strong>).</li>
+        <li>El <strong>maíz</strong> se comía y también se usaba para preparar <strong>chicha</strong>, una bebida fermentada para las ceremonias.</li>
+        <li>La <strong>quinoa</strong> era otro alimento base, muy nutritivo.</li>
+        <li>Comían <strong>charqui</strong> (carne seca y salada de llama) y también <strong>cuy</strong> (cuyes).</li>
+        <li>La <strong>llama</strong> y la <strong>alpaca</strong> les daban carne, lana y servían para transportar carga.</li>
+        <li>Usaban <strong>ají</strong> para dar sabor a sus comidas.</li>
+      </ul>
+    </section>
+
+    <section class="topic gold" id="s-cultivos">
+      <h2><span class="icon">🌱</span>Principales cultivos</h2>
+      <ul>
+        <li>Papa (cientos de variedades)</li>
+        <li>Maíz</li>
+        <li>Quinoa</li>
+        <li>Ají</li>
+        <li>Poroto (frijoles) y calabaza</li>
+        <li>Algodón, para tejer</li>
+        <li>Hoja de coca, usada en ceremonias y como medicina</li>
+      </ul>
+    </section>
+
+    <section class="topic red" id="s-tierra">
+      <h2><span class="icon">⛏️</span>¿Cómo trabajaban la tierra?</h2>
+      <ul>
+        <li>Construyeron <strong>andenes</strong>: terrazas en las montañas para poder cultivar en zonas empinadas.</li>
+        <li>No usaban dinero: intercambiaban productos (<strong>trueque</strong>).</li>
+        <li>Cada familia debía trabajar un tiempo para el Estado o el templo: esto se llamaba <strong>la mita</strong>.</li>
+      </ul>
+    </section>
+
+    <section class="topic teal" id="s-construcciones">
+      <h2><span class="icon">🪨</span>Construcciones increíbles</h2>
+      <p>Eran expertos construyendo con piedra. Encajaban bloques enormes sin usar argamasa (una especie de pegamento), tan perfectamente que ni un cuchillo entra entre ellos. Su construcción más famosa es <strong>Machu Picchu</strong>.</p>
+    </section>
+
+    <section class="topic gold" id="s-fin">
+      <h2><span class="icon">⚔️</span>El fin del imperio</h2>
+      <p>En 1532, el español <strong>Francisco Pizarro</strong> llegó al imperio inca. Capturó al Inca <strong>Atahualpa</strong>, y con el tiempo el imperio fue conquistado por los españoles.</p>
+    </section>
+
+    <h2 class="section-head"><span>🃏</span>Palabras clave</h2>
+    <p class="quiz-sub">Toca cada tarjeta para ver el significado.</p>
+    <div class="vocab-grid" id="vocabGrid"></div>
+
+    <h2 class="section-head"><span>✏️</span>Ponte a prueba</h2>
+    <p class="quiz-sub">Elige una respuesta en cada pregunta.</p>
+    <div id="quizContainer"></div>
+    <div class="score-box" id="scoreBox" hidden></div>
+
+    <div class="study-toggle">
+      <span>¿Ya repasaste toda la guía?</span>
+      <button class="done-btn" id="markStudied">Marcar como estudiada ✓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- Tema claro/oscuro ---------- */
+const themeToggle = document.getElementById('themeToggle');
+function currentTheme(){
+  const t = document.documentElement.getAttribute('data-theme');
+  if(t) return t;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  themeToggle.textContent = t === 'dark' ? '☀️' : '🌙';
+  try{ localStorage.setItem('guias-tema', t); }catch(e){}
+}
+try{
+  const saved = localStorage.getItem('guias-tema');
+  if(saved) applyTheme(saved); else themeToggle.textContent = currentTheme()==='dark'?'☀️':'🌙';
+}catch(e){}
+themeToggle.addEventListener('click', ()=> applyTheme(currentTheme()==='dark'?'light':'dark'));
+
+/* ---------- Filtros de la portada ---------- */
+const filters = document.getElementById('filters');
+filters.addEventListener('click', (e)=>{
+  const chip = e.target.closest('.chip');
+  if(!chip) return;
+  filters.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  const mat = chip.dataset.mat;
+  document.querySelectorAll('#guideGrid .guide-card').forEach(card=>{
+    card.hidden = !(mat==='all' || card.dataset.mat===mat);
+  });
+});
+
+/* ---------- Router simple por # ---------- */
+const readProgress = document.getElementById('readProgress');
+function showScreen(){
+  const hash = location.hash.replace('#','');       // ej: "incas/s-mapa"
+  const [screen, anchor] = hash.split('/');
+  const isGuide = screen && document.getElementById('screen-'+screen);
+
+  document.querySelectorAll('[id^="screen-"]').forEach(s=>s.hidden = true);
+  const target = document.getElementById('screen-' + (isGuide ? screen : 'home'));
+  target.hidden = false;
+  readProgress.hidden = !isGuide;
+
+  if(isGuide && anchor){
+    const el = document.getElementById(anchor);
+    if(el){ setTimeout(()=>el.scrollIntoView({behavior:'smooth'}), 30); return; }
+  }
+  window.scrollTo(0,0);
+  updateProgress();
+}
+window.addEventListener('hashchange', showScreen);
+
+document.querySelectorAll('[data-back]').forEach(b=>{
+  b.addEventListener('click', ()=>{ location.hash=''; });
+});
+
+/* ---------- Barra de progreso de lectura ---------- */
+function updateProgress(){
+  if(readProgress.hidden) return;
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  readProgress.style.width = max>0 ? (h.scrollTop/max*100)+'%' : '0%';
+}
+window.addEventListener('scroll', updateProgress, {passive:true});
+
+/* ---------- Estado "estudiada" (localStorage) ---------- */
+function refreshStudied(){
+  document.querySelectorAll('#guideGrid .guide-card[data-guide]').forEach(card=>{
+    let done=false;
+    try{ done = localStorage.getItem('estudiada-'+card.dataset.guide)==='1'; }catch(e){}
+    card.classList.toggle('done', done);
+  });
+}
+const markBtn = document.getElementById('markStudied');
+if(markBtn){
+  markBtn.addEventListener('click', ()=>{
+    try{ localStorage.setItem('estudiada-incas','1'); }catch(e){}
+    markBtn.textContent = '¡Marcada como estudiada! 🎉';
+    markBtn.disabled = true;
+    refreshStudied();
+  });
+}
+
+/* ---------- Vocabulario (flip cards) ---------- */
+const vocab = [
+  {t:"Ayllu", d:"Comunidad de familias incas que compartía y trabajaba la tierra."},
+  {t:"Mita", d:"Trabajo que cada familia debía dar al Estado o al templo."},
+  {t:"Quipu", d:"Cuerdas con nudos usadas para registrar información."},
+  {t:"Andén", d:"Terraza construida en la montaña para cultivar."},
+  {t:"Chasqui", d:"Mensajero que corría llevando noticias por el imperio."},
+  {t:"Tahuantinsuyo", d:"Nombre del imperio inca, 'las cuatro regiones'."},
+  {t:"Inti", d:"Dios Sol, el más importante para los incas."},
+  {t:"Trueque", d:"Intercambiar productos porque no se usaba dinero."},
+  {t:"Inti Raymi", d:"Fiesta del Sol, la celebración más importante del año."},
+  {t:"Coricancha", d:"Templo del Sol en Cusco, cubierto de oro."},
+  {t:"Chicha", d:"Bebida fermentada de maíz usada en ceremonias."},
+  {t:"Pucará", d:"Fortaleza inca; se construyeron varias en el norte de Chile."},
+  {t:"Chuño", d:"Papa deshidratada, forma de conservar el alimento."},
+  {t:"Diaguitas", d:"Pueblo originario de Chile que se relacionó con los incas."},
+  {t:"Yanacona", d:"Persona sin ayllu que servía al Inca, la nobleza o los templos."},
+  {t:"Curaca", d:"Jefe local de baja nobleza que administraba una región."},
+  {t:"Hatun runa", d:"Nombre que se daba a la gente del pueblo, organizada en ayllus."}
+];
+const vocabGrid = document.getElementById('vocabGrid');
+vocab.forEach(v=>{
+  const card = document.createElement('div');
+  card.className = 'flip-card';
+  card.tabIndex = 0;
+  card.setAttribute('role','button');
+  card.setAttribute('aria-label', v.t + ': toca para ver el significado');
+  card.innerHTML = `<div class="flip-inner">
+    <div class="flip-front">${v.t}</div>
+    <div class="flip-back">${v.d}</div>
+  </div>`;
+  const flip = ()=>card.classList.toggle('flipped');
+  card.addEventListener('click', flip);
+  card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();flip();} });
+  vocabGrid.appendChild(card);
+});
+
+/* ---------- Quiz ---------- */
+const quiz = [
+  {q:"¿Cuál era la capital del imperio inca?",
+   opts:["Machu Picchu","Cusco","Tahuantinsuyo"], correct:1,
+   fb:"Cusco era la capital del imperio."},
+  {q:"¿Qué eran los andenes?",
+   opts:["Terrazas para cultivar en la montaña","Cuerdas para contar","Caminos del imperio"], correct:0,
+   fb:"Los andenes eran terrazas de cultivo en las laderas."},
+  {q:"¿Cómo se llamaban los mensajeros incas?",
+   opts:["Ayllus","Chasquis","Sacerdotes"], correct:1,
+   fb:"Los chasquis llevaban los mensajes corriendo por el imperio."},
+  {q:"¿Qué usaban los incas para registrar información, ya que no tenían escritura alfabética?",
+   opts:["Los quipus","Los andenes","La mita"], correct:0,
+   fb:"Los quipus eran cuerdas anudadas usadas para registrar datos."},
+  {q:"¿Quién conquistó el imperio inca?",
+   opts:["Cristóbal Colón","Francisco Pizarro","Hernán Cortés"], correct:1,
+   fb:"Francisco Pizarro llegó en 1532 y conquistó el imperio."},
+  {q:"¿Hasta dónde llegó el imperio inca en Chile, aproximadamente?",
+   opts:["Hasta el río Maule","Hasta Santiago solamente","No llegaron a Chile"], correct:0,
+   fb:"El imperio llegó aproximadamente hasta el río Maule, en el centro de Chile."},
+  {q:"¿Cuál era el dios más importante para los incas?",
+   opts:["Pachamama","Inti (el Sol)","Illapa"], correct:1,
+   fb:"Inti, el dios Sol, era el más importante; se creía que el Inca era su hijo."},
+  {q:"¿Cuál era el alimento principal de los incas?",
+   opts:["El trigo","La papa","El arroz"], correct:1,
+   fb:"La papa era su alimento principal, con cientos de variedades."},
+  {q:"¿Cómo hacían los chasquis para llevar mensajes tan rápido a largas distancias?",
+   opts:["Corrían todo el camino ellos solos","Trabajaban en relevos, entregando el mensaje a otro chasqui","Usaban caballos"], correct:1,
+   fb:"Trabajaban en relevos: cada chasqui corría un tramo y entregaba el mensaje al siguiente."},
+  {q:"¿Quiénes eran los yanaconas?",
+   opts:["Los jefes de la alta nobleza","Personas sin ayllu que servían al Inca, la nobleza o los templos","Los sacerdotes principales"], correct:1,
+   fb:"Los yanaconas no pertenecían a un ayllu; servían de forma permanente al Inca, la nobleza o los templos."}
+];
+const quizContainer = document.getElementById('quizContainer');
+const scoreBox = document.getElementById('scoreBox');
+let score = 0, answered = 0;
+
+function buildQuiz(){
+  score = 0; answered = 0;
+  scoreBox.hidden = true;
+  quizContainer.innerHTML = '';
+  quiz.forEach((item,qi)=>{
+    const block = document.createElement('div');
+    block.className='q-block';
+    const optsHtml = item.opts.map((o,oi)=>
+      `<button class="q-opt" data-qi="${qi}" data-oi="${oi}">${o}</button>`
+    ).join('');
+    block.innerHTML = `<div class="q-text">${qi+1}. ${item.q}</div>
+      <div class="q-options">${optsHtml}</div>
+      <div class="q-feedback" id="fb-${qi}"></div>`;
+    quizContainer.appendChild(block);
+  });
+}
+buildQuiz();
+
+quizContainer.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.q-opt');
+  if(!btn) return;
+  const qi = +btn.dataset.qi, oi = +btn.dataset.oi;
+  const block = btn.closest('.q-block');
+  if(block.dataset.done) return;
+  block.dataset.done = "1";
+  answered++;
+
+  const item = quiz[qi];
+  block.querySelectorAll('.q-opt').forEach((b,i)=>{
+    if(i === item.correct) b.classList.add('correct');
+    else if(i === oi) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('fb-'+qi);
+  if(oi === item.correct){ score++; fb.textContent = "¡Correcto! " + item.fb; }
+  else { fb.textContent = "Casi. " + item.fb; }
+
+  if(answered === quiz.length){
+    let msg;
+    if(score === quiz.length) msg = "¡Perfecto! Te la sabes entera 🏆";
+    else if(score >= quiz.length-3) msg = "¡Muy bien! Ya casi la dominas 👏";
+    else msg = "Buen intento. Repasa y vuelve a probar 💪";
+    scoreBox.hidden = false;
+    scoreBox.innerHTML = `<span class="score-num">${score} / ${quiz.length}</span>
+      <span class="score-msg">${msg}</span><br>
+      <button class="retry-btn" id="retryBtn">Intentar de nuevo ↻</button>`;
+    document.getElementById('retryBtn').addEventListener('click', ()=>{
+      buildQuiz();
+      document.querySelector('.section-head:last-of-type')?.scrollIntoView({behavior:'smooth'});
+    });
+    scoreBox.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+});
+
+/* ---------- Inicio ---------- */
+refreshStudied();
+showScreen();
+</script>

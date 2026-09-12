@@ -174,6 +174,8 @@
     height:88px;display:flex;align-items:center;justify-content:center;
     font-size:2.6rem;position:relative;
   }
+  .card-top img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card-top.photo{padding:0;}
   .card-top.historia{background:linear-gradient(135deg,var(--historia),var(--historia-2));}
   .card-top.mate{background:linear-gradient(135deg,#2E6DB4,#5a97d8);}
   .card-top.lengua{background:linear-gradient(135deg,#7A4B8C,#a878bd);}
@@ -263,6 +265,30 @@
   .map-legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:10px;font-size:.82rem;}
   .map-legend span{display:inline-flex;align-items:center;gap:5px;}
   .swatch{width:12px;height:12px;border-radius:3px;display:inline-block;}
+
+  /* ---- Imágenes ---- */
+  .guide-photo{
+    margin:22px 0 6px;border-radius:var(--radius);overflow:hidden;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .guide-photo img{width:100%;height:230px;object-fit:cover;display:block;}
+  .fig{margin:12px 0 2px;}
+  .fig img{
+    width:100%;height:auto;display:block;border-radius:12px;
+    border:1px solid var(--line);box-shadow:var(--shadow);background:var(--bg-2);
+  }
+  .fig.portrait{max-width:330px;margin-left:auto;margin-right:auto;}
+  .fig figcaption{font-size:.82rem;color:var(--ink-soft);margin-top:7px;text-align:center;line-height:1.4;}
+  .fig .credit{display:block;font-size:.68rem;opacity:.7;margin-top:1px;}
+  .fig .credit a{color:inherit;}
+
+  .credits{
+    margin-top:40px;padding:14px 16px;background:var(--card);
+    border:1px solid var(--line-soft);border-radius:var(--radius);
+  }
+  .credits summary{cursor:pointer;font-weight:600;font-size:.92rem;}
+  .credits ul{margin:10px 0 0;padding-left:18px;font-size:.78rem;color:var(--ink-soft);line-height:1.5;}
+  .credits a{color:var(--accent);}
 
   .section-head{font-size:1.5rem;margin:48px 0 14px;display:flex;align-items:center;gap:10px;}
 
@@ -383,7 +409,7 @@
 
     <div class="grid" id="guideGrid">
       <a class="guide-card" href="#incas" data-mat="historia" data-guide="incas">
-        <div class="card-top historia">☀️</div>
+        <div class="card-top historia photo"><img src="img/machu-picchu.jpg" alt="Machu Picchu" loading="lazy"></div>
         <div class="card-body">
           <span class="card-tag historia">Historia · 4° básico</span>
           <h3>El Imperio Inca</h3>
@@ -467,6 +493,10 @@
   </nav>
 
   <div class="wrap">
+    <div class="guide-photo">
+      <img src="img/machu-picchu.jpg" alt="Vista de la ciudad inca de Machu Picchu, con sus construcciones de piedra entre las montañas de los Andes." loading="lazy">
+    </div>
+
     <section class="topic teal" id="s-ubicacion">
       <h2><span class="icon">🗺️</span>¿Dónde vivían?</h2>
       <p>Los incas formaron un imperio enorme llamado <strong>Tahuantinsuyo</strong>, que se extendía a lo largo de la cordillera de los Andes, desde el sur de Colombia hasta el centro de Chile y el norte de Argentina.</p>
@@ -546,6 +576,12 @@
         <li><strong>Isla del Sol</strong>, en el Lago Titicaca: lugar sagrado, según sus mitos ahí nació el Sol.</li>
         <li><strong>Ushnus</strong>: plataformas ceremoniales en distintas partes del imperio, incluso en cerros altos del norte de Chile.</li>
       </ul>
+      <figure class="fig">
+        <img src="img/coricancha.jpg" alt="Entrada del Qorikancha (Coricancha) en Cusco, con un cartel dorado que dice Recinto Sagrado Qorikancha." loading="lazy">
+        <figcaption>El Qorikancha (Coricancha) en Cusco: el templo del Sol más importante del imperio.
+          <span class="credit">Foto: flowcomm, CC BY 2.0 — vía Wikimedia Commons.</span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="topic red" id="s-vida">
@@ -557,6 +593,12 @@
         <li><strong>Capac Raymi</strong>: fiesta de diciembre, ligada a ritos de iniciación de los jóvenes.</li>
         <li>Usaban música con instrumentos como la <strong>quena</strong> (flauta) y tambores, junto con danzas.</li>
       </ul>
+      <figure class="fig">
+        <img src="img/inti-raymi.jpg" alt="Personas vestidas con trajes tradicionales caminando en fila hacia la fortaleza de Sacsayhuamán durante la fiesta del Inti Raymi." loading="lazy">
+        <figcaption>La fiesta del Inti Raymi todavía se celebra hoy en Cusco, junto a la fortaleza de Sacsayhuamán.
+          <span class="credit">Foto: McKay Savage, CC BY 2.0 — vía Wikimedia Commons.</span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="topic teal" id="s-caminos">
@@ -566,6 +608,12 @@
 
     <section class="topic gold" id="s-chasqui">
       <h2><span class="icon">🏃</span>El chasqui: el encargado de llevar la información</h2>
+      <figure class="fig portrait">
+        <img src="img/chasqui.jpg" alt="Dibujo antiguo de un chasqui corriendo, soplando un caracol (pututu) para avisar y llevando un quipu en la mano." loading="lazy">
+        <figcaption>Un chasqui soplando su pututu y llevando un quipu.
+          <span class="credit">Dibujo de Guamán Poma de Ayala, 1615 (dominio público).</span>
+        </figcaption>
+      </figure>
       <p>El <strong>chasqui</strong> era el mensajero del imperio inca. Su función era llevar noticias, órdenes del Inca y otra información importante de un extremo a otro del Tahuantinsuyo, corriendo por el Camino del Inca.</p>
       <ul>
         <li>Los chasquis trabajaban en <strong>relevos</strong>: cada uno corría solo un tramo del camino y luego entregaba el mensaje al siguiente chasqui, que esperaba listo en una pequeña construcción llamada <strong>tambo</strong> o <strong>chasquiwasi</strong>.</li>
@@ -579,6 +627,12 @@
     <section class="topic red" id="s-quipus">
       <h2><span class="icon">🪢</span>¿Cómo se comunicaban sin escritura?</h2>
       <p>No tenían un alfabeto como el nuestro. Usaban los <strong>quipus</strong>: cuerdas de colores con nudos que servían para registrar cantidades e información importante.</p>
+      <figure class="fig">
+        <img src="img/quipu.jpg" alt="Quipus incas exhibidos en un museo: una cuerda principal de la que cuelgan muchas cuerdas más finas con nudos." loading="lazy">
+        <figcaption>Quipus reales en un museo. Cada cuerda y cada nudo guardaba un dato.
+          <span class="credit">Foto: bobistraveling, CC BY 2.0 — vía Wikimedia Commons.</span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="topic teal" id="s-alimentacion">
@@ -591,6 +645,12 @@
         <li>La <strong>llama</strong> y la <strong>alpaca</strong> les daban carne, lana y servían para transportar carga.</li>
         <li>Usaban <strong>ají</strong> para dar sabor a sus comidas.</li>
       </ul>
+      <figure class="fig">
+        <img src="img/llama.jpg" alt="Una llama de pelaje blanco y café mirando de perfil, con los andenes de Machu Picchu al fondo." loading="lazy">
+        <figcaption>La llama les daba carne y lana, y cargaba cosas por los caminos de montaña.
+          <span class="credit">Foto: Alexandre Buisse, CC BY-SA 3.0 — vía Wikimedia Commons.</span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="topic gold" id="s-cultivos">
@@ -618,6 +678,12 @@
     <section class="topic teal" id="s-construcciones">
       <h2><span class="icon">🪨</span>Construcciones increíbles</h2>
       <p>Eran expertos construyendo con piedra. Encajaban bloques enormes sin usar argamasa (una especie de pegamento), tan perfectamente que ni un cuchillo entra entre ellos. Su construcción más famosa es <strong>Machu Picchu</strong>.</p>
+      <figure class="fig">
+        <img src="img/andenes.jpg" alt="Muros y terrazas de piedra de Machu Picchu, con los bloques encajados unos con otros." loading="lazy">
+        <figcaption>Muros y andenes de piedra en Machu Picchu, encajados sin pegamento.
+          <span class="credit">Foto: Diego Delso, CC BY-SA 4.0 — vía Wikimedia Commons.</span>
+        </figcaption>
+      </figure>
     </section>
 
     <section class="topic gold" id="s-fin">
@@ -633,6 +699,20 @@
     <p class="quiz-sub">Elige una respuesta en cada pregunta.</p>
     <div id="quizContainer"></div>
     <div class="score-box" id="scoreBox" hidden></div>
+
+    <details class="credits">
+      <summary>Créditos de las imágenes</summary>
+      <ul>
+        <li>Machu Picchu — Yoann Supertramp, CC BY 3.0</li>
+        <li>Chasqui — Guamán Poma de Ayala (1615), dominio público</li>
+        <li>Quipus — bobistraveling, CC BY 2.0</li>
+        <li>Muros y andenes — Diego Delso, CC BY-SA 4.0</li>
+        <li>Llama — Alexandre Buisse (Nattfodd), CC BY-SA 3.0</li>
+        <li>Qorikancha — flowcomm, CC BY 2.0</li>
+        <li>Inti Raymi — McKay Savage, CC BY 2.0</li>
+      </ul>
+      <p style="font-size:.75rem;color:var(--ink-soft);margin:8px 0 0;">Imágenes de <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>, usadas con fines educativos.</p>
+    </details>
 
     <div class="study-toggle">
       <span>¿Ya repasaste toda la guía?</span>
